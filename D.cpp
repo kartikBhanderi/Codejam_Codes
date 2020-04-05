@@ -2,7 +2,7 @@
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 
-#define mod 1000000007 
+#define inf 1000000005
 #define check exit(0)
 #define nl cout<<endl;
 #define ordered_set tree<int,null_type,less_equal<int>,rb_tree_tag,tree_order_statistics_node_update>
@@ -14,27 +14,84 @@
 using namespace __gnu_pbds;
 using namespace std;
 
-int main()
+
+int stringtoint(string s)
 {
-    //jaldi
-    int t,b;
-    cin>>t>>b;
-    int tt=t;
+    int ans;
+    stringstream gharkainput(s);
+    gharkainput>>ans;
+    return ans;
+}
+
+void Func(string& s)
+{
+    for(char& all:s)
+    {
+        if(all=='1')all='0';
+        else if(all=='0')all='1';
+    }
+}
+
+
+ll power(ll base,ll exp)
+{
+    // mod ka dhyan rkhe ;)
+    ll ans=1;
+    //base%=mod;
+    while(exp>0)
+    {
+        if(exp&1) ans = (ans*base);
+        base = (base*base);
+        exp/=2;
+    }
+    return ans;
+}
+
+int main() 
+{
+    int n,t;
+    cin>>t>>n;
     while(t--)
     {
-        vector<int> ans;
-        for(int i=0;i<b;i++)
+        char le,cha;
+        string s(n,'?');
+        int i,j,x=-1,y=-1;
+        for(i=1,j=0;j<n/2;i+=2)
         {
-            int x;
-            cout<<i+1<<endl;
-            cin>>x;
-            ans.push_back(x);
+            if(i>10 && i%10==1)
+            {
+                if(y!=-1)
+                {
+                    cout << y+1 << endl;
+                    cin >> le;
+                    if(s[y]!=le)Func(s);
+                }
+                else {cout << "1\n";cin>>le;}
+                if(x!=-1)
+                {
+                    cout << x+1 << endl;
+                    cin >> le;
+                    if(s[x]!=le)reverse(s.begin(),s.end());
+                }
+                else 
+                {
+                    cout << "1\n";
+                    cin>>le;
+                }
+            }
+            else
+            {
+                cout << j+1 << endl;
+                cin >> s[j];
+                cout << n-j << endl;
+                cin >> s[n-1-j];
+                if(s[j]==s[n-1-j])y=j;
+                else if(s[j]!=s[n-1-j]) x=j;
+                ++j;
+            }
         }
-        for(int i=0;i<b;i++ ) cout<<ans[i];
-        cout<<endl;
-        char c;
-        cin>>c;
-        if(c=='N') break;
+        cout<<s<<endl;
+        cin>>cha;
+        if(cha=='N')return 0;
     }
-    return 0;
 }
